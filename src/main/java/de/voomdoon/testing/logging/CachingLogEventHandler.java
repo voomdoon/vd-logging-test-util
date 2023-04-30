@@ -14,22 +14,31 @@ import de.voomdoon.logging.LogLevel;
  *
  * @author André Schulz
  *
- * @since DOCME add inception version number
+ * @since 0.1.0
  */
 public class CachingLogEventHandler implements LogEventHandler {
 
 	/**
-	 * @since DOCME add inception version number
+	 * @since 0.1.0
 	 */
 	private List<LogEvent> events;
 
 	/**
 	 * DOCME add JavaDoc for constructor CachingLogEventHandler
 	 * 
-	 * @since DOCME add inception version number
+	 * @since 0.1.0
 	 */
 	public CachingLogEventHandler() {
 		events = new ArrayList<>();
+	}
+
+	/**
+	 * DOCME add JavaDoc for method clear
+	 * 
+	 * @since 0.1.0
+	 */
+	public void clear() {
+		events.clear();
 	}
 
 	/**
@@ -37,7 +46,7 @@ public class CachingLogEventHandler implements LogEventHandler {
 	 * 
 	 * @param logLevels
 	 * @return {@link List} of {@link LogEvent}
-	 * @since DOCME add inception version number
+	 * @since 0.1.0
 	 */
 	public List<LogEvent> getLogEvents(LogLevel... logLevels) {
 		List<LogLevel> levels = logLevels == null ? Collections.emptyList() : Arrays.asList(logLevels);
@@ -46,7 +55,7 @@ public class CachingLogEventHandler implements LogEventHandler {
 	}
 
 	/**
-	 * @since DOCME add inception version number
+	 * @since 0.1.0
 	 */
 	@Override
 	public void handleLogEvent(LogEvent logEvent) {

@@ -123,6 +123,51 @@ class LoggingCheckingTestBaseTest extends TestBase {
 	}
 
 	/**
+	 * DOCME add JavaDoc for LoggingCheckingTestBaseTest
+	 *
+	 * @author André Schulz
+	 *
+	 * @since 0.1.0
+	 */
+	static class LogTestStart extends TestBase {
+
+		/**
+		 * DOCME add JavaDoc for LoggingCheckingTestBaseTest.LogTestStart
+		 *
+		 * @author André Schulz
+		 *
+		 * @since 0.1.0
+		 */
+		private static class LoggingCheckingTestBaseWithPublicLogTestStart extends LoggingCheckingTestBase {
+
+			/**
+			 * @since 0.1.0
+			 */
+			@Override
+			public void logTestStart() {
+				super.logTestStart();
+			}
+		}
+
+		/**
+		 * DOCME add JavaDoc for method test_notCached
+		 * 
+		 * @since 0.1.0
+		 */
+		@Test
+		void test_notCached() throws Exception {
+			logTestStart();
+
+			LoggingCheckingTestBaseWithPublicLogTestStart test = new LoggingCheckingTestBaseWithPublicLogTestStart();
+
+			test.logTestStart();
+
+			assertThat(test.getLogCache().getLogEvents(LogLevel.DEBUG)).isEmpty();
+		}
+
+	}
+
+	/**
 	 * @author André Schulz
 	 *
 	 * @since 0.1.0
@@ -145,12 +190,13 @@ class LoggingCheckingTestBaseTest extends TestBase {
 		/**
 		 * DOCME add JavaDoc for method log
 		 * 
-		 * @since DOCME add inception version number
+		 * @since 0.1.0
 		 */
 		void log() {
 			logger.log(logLevel, logLevel);
 		}
 
+		// TODO handle out commented code
 		// /**
 		// * // * @since 0.1.0 //
 		// */
@@ -164,11 +210,7 @@ class LoggingCheckingTestBaseTest extends TestBase {
 		// }
 	}
 
-	/**
-	 * @since 0.1.0
-	 */
-	private static boolean skipLogging = true;
-
+	// TODO handle out commented code
 	// /**
 	// * @since 0.1.0
 	// */
@@ -218,6 +260,11 @@ class LoggingCheckingTestBaseTest extends TestBase {
 	// skipLogging = true;
 	// assertEquals(1, result.getFailureCount());
 	// }
+
+	/**
+	 * @since 0.1.0
+	 */
+	private static boolean skipLogging = true;
 
 	/**
 	 * @since 0.1.0

@@ -9,7 +9,7 @@ import de.voomdoon.testing.tests.TestBase;
  *
  * @author André Schulz
  *
- * @since DOCME add inception version number
+ * @since 0.1.0
  */
 public abstract class LoggingCheckingTestBase extends TestBase {
 
@@ -21,7 +21,7 @@ public abstract class LoggingCheckingTestBase extends TestBase {
 	/**
 	 * DOCME add JavaDoc for constructor LoggingCheckingTestBase
 	 * 
-	 * @since DOCME add inception version number
+	 * @since 0.1.0
 	 */
 	protected LoggingCheckingTestBase() {
 		logCache = new CachingLogEventHandler();
@@ -33,9 +33,19 @@ public abstract class LoggingCheckingTestBase extends TestBase {
 	 * DOCME add JavaDoc for method getLogCache
 	 * 
 	 * @return
-	 * @since DOCME add inception version number
+	 * @since 0.1.0
 	 */
 	public CachingLogEventHandler getLogCache() {
 		return logCache;
+	}
+
+	/**
+	 * @since 0.1.0
+	 */
+	@Override
+	protected void logTestStart() {
+		super.logTestStart();
+
+		getLogCache().clear();
 	}
 }

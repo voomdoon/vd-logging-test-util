@@ -1,9 +1,11 @@
 package de.voomdoon.testing.logging;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import org.junit.jupiter.api.Test;
 
+import de.voomdoon.logging.LogEvent;
 import de.voomdoon.logging.LogLevel;
 import de.voomdoon.logging.test.TestLogEvent;
 import de.voomdoon.testing.tests.TestBase;
@@ -13,7 +15,7 @@ import de.voomdoon.testing.tests.TestBase;
  *
  * @author André Schulz
  *
- * @since DOCME add inception version number
+ * @since 0.1.0
  */
 abstract class CachingLogEventHandlerTest {
 
@@ -22,12 +24,79 @@ abstract class CachingLogEventHandlerTest {
 	 *
 	 * @author André Schulz
 	 *
-	 * @since DOCME add inception version number
+	 * @since 0.1.0
+	 */
+	static class ClearTest extends TestBase {
+
+		/**
+		 * DOCME add JavaDoc for method test
+		 * 
+		 * @since 0.1.0
+		 */
+		@Test
+		void test() throws Exception {
+			logTestStart();
+
+			CachingLogEventHandler handler = new CachingLogEventHandler();
+			handler.handleLogEvent(new LogEvent() {
+
+				@Override
+				public Throwable getError() {
+					throw new UnsupportedOperationException("'getError' not implemented at 'ClearTest'!");
+				}
+
+				@Override
+				public LogLevel getLevel() {
+					return LogLevel.DEBUG;
+				}
+
+				@Override
+				public Object getMessage() {
+					throw new UnsupportedOperationException("'getMessage' not implemented at 'ClearTest'!");
+				}
+
+				@Override
+				public Class<?> getSourceClass() {
+					throw new UnsupportedOperationException("'getSourceClass' not implemented at 'ClearTest'!");
+				}
+
+				@Override
+				public long getTimestamp() {
+					throw new UnsupportedOperationException("'getTimestamp' not implemented at 'ClearTest'!");
+				}
+			});
+
+			handler.clear();
+
+			assertThat(handler.getLogEvents(LogLevel.DEBUG)).isEmpty();
+		}
+
+		/**
+		 * DOCME add JavaDoc for method test_empty
+		 * 
+		 * @since 0.1.0
+		 */
+		@Test
+		void test_empty_notThrowingAnything() throws Exception {
+			logTestStart();
+
+			CachingLogEventHandler handler = new CachingLogEventHandler();
+
+			assertDoesNotThrow(() -> handler.clear());
+		}
+	}
+
+	/**
+	 * DOCME add JavaDoc for CachingLogEventHandlerTest
+	 *
+	 * @author André Schulz
+	 *
+	 * @since 0.1.0
 	 */
 	static class GetLogEventsTest extends TestBase {
 
 		/**
-		 * @since DOCME add inception version number
+		 * @since 0.1.0
 		 */
 		private CachingLogEventHandler handler = new CachingLogEventHandler();
 
@@ -35,7 +104,7 @@ abstract class CachingLogEventHandlerTest {
 		 * DOCME add JavaDoc for method test
 		 * 
 		 * @throws Exception
-		 * @since DOCME add inception version number
+		 * @since 0.1.0
 		 */
 		@Test
 		void test_all() throws Exception {
@@ -50,7 +119,7 @@ abstract class CachingLogEventHandlerTest {
 		 * DOCME add JavaDoc for method test_initial
 		 * 
 		 * @throws Exception
-		 * @since DOCME add inception version number
+		 * @since 0.1.0
 		 */
 		@Test
 		void test_initial() throws Exception {
@@ -63,7 +132,7 @@ abstract class CachingLogEventHandlerTest {
 		 * DOCME add JavaDoc for method test_level
 		 * 
 		 * @throws Exception
-		 * @since DOCME add inception version number
+		 * @since 0.1.0
 		 */
 		@Test
 		void test_level() throws Exception {
@@ -78,7 +147,7 @@ abstract class CachingLogEventHandlerTest {
 		 * DOCME add JavaDoc for method test_level_empty
 		 * 
 		 * @throws Exception
-		 * @since DOCME add inception version number
+		 * @since 0.1.0
 		 */
 		@Test
 		void test_level_empty() throws Exception {
