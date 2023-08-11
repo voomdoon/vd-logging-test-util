@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import de.voomdoon.logging.LogEvent;
@@ -129,7 +130,8 @@ class LoggingCheckingTestBaseTest extends TestBase {
 	 *
 	 * @since 0.1.0
 	 */
-	static class LogTestStart extends TestBase {
+	@Nested
+	class LogTestStartTest extends TestBase {
 
 		/**
 		 * DOCME add JavaDoc for LoggingCheckingTestBaseTest.LogTestStart

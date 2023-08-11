@@ -3,6 +3,7 @@ package de.voomdoon.testing.logging;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import de.voomdoon.logging.LogEvent;
@@ -26,7 +27,8 @@ abstract class CachingLogEventHandlerTest {
 	 *
 	 * @since 0.1.0
 	 */
-	static class ClearTest extends TestBase {
+	@Nested
+	class ClearTest extends TestBase {
 
 		/**
 		 * DOCME add JavaDoc for method test
@@ -93,7 +95,8 @@ abstract class CachingLogEventHandlerTest {
 	 *
 	 * @since 0.1.0
 	 */
-	static class GetLogEventsTest extends TestBase {
+	@Nested
+	class GetLogEventsTest extends TestBase {
 
 		/**
 		 * @since 0.1.0
