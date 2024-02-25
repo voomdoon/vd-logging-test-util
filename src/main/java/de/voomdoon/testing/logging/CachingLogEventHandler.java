@@ -9,6 +9,8 @@ import de.voomdoon.logging.LogEvent;
 import de.voomdoon.logging.LogEventHandler;
 import de.voomdoon.logging.LogLevel;
 
+//TODO rename to CachingTestLogEventHandler
+
 /**
  * DOCME add JavaDoc for
  *
