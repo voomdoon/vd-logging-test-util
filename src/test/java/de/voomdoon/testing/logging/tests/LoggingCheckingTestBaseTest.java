@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 
 import de.voomdoon.logging.LogEvent;
 import de.voomdoon.logging.LogLevel;
+import de.voomdoon.logging.LogManager;
+import de.voomdoon.testing.logging.CachingLogEventHandler;
 import de.voomdoon.testing.tests.TestBase;
 
 //TODO test logTestEnd
@@ -81,8 +83,23 @@ class LoggingCheckingTestBaseTest extends TestBase {
 		}
 
 		/**
-		 * DOCME add JavaDoc for method test_notCached
-		 * 
+		 * @since 0.1.0
+		 */
+		@Test
+		void test_callsSuper() throws Exception {
+			logTestStart();
+
+			CachingLogEventHandler logCache = new CachingLogEventHandler();
+			LogManager.addLogEventHandler(logCache);
+
+			LoggingCheckingTestBaseImplementation implementation = new LoggingCheckingTestBaseImplementation(
+					LogLevel.DEBUG);
+			implementation.logTestStart();
+
+			assertThat(logCache.getLogEvents(LogLevel.INFO).get(0).getMessage().toString()).contains("running test");
+		}
+
+		/**
 		 * @since 0.1.0
 		 */
 		@Test
