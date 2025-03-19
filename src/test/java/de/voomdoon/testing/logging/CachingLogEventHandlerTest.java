@@ -18,7 +18,7 @@ import de.voomdoon.testing.tests.TestBase;
  *
  * @since 0.1.0
  */
-abstract class CachingLogEventHandlerTest {
+class CachingLogEventHandlerTest {
 
 	/**
 	 * DOCME add JavaDoc for CachingLogEventHandlerTest
@@ -104,21 +104,6 @@ abstract class CachingLogEventHandlerTest {
 		private CachingLogEventHandler handler = new CachingLogEventHandler();
 
 		/**
-		 * DOCME add JavaDoc for method test
-		 * 
-		 * @throws Exception
-		 * @since 0.1.0
-		 */
-		@Test
-		void test_all() throws Exception {
-			logTestStart();
-
-			handler.handleLogEvent(new TestLogEvent().setLevel(LogLevel.INFO));
-
-			assertThat(handler.getLogEvents()).hasSize(1);
-		}
-
-		/**
 		 * DOCME add JavaDoc for method test_initial
 		 * 
 		 * @throws Exception
@@ -132,13 +117,43 @@ abstract class CachingLogEventHandlerTest {
 		}
 
 		/**
+		 * DOCME add JavaDoc for method test
+		 * 
+		 * @throws Exception
+		 * @since 0.1.0
+		 */
+		@Test
+		void test_logLevels_empty() throws Exception {
+			logTestStart();
+
+			handler.handleLogEvent(new TestLogEvent().setLevel(LogLevel.INFO));
+
+			assertThat(handler.getLogEvents()).hasSize(1);
+		}
+
+		/**
+		 * DOCME add JavaDoc for method test
+		 * 
+		 * @throws Exception
+		 * @since 0.1.0
+		 */
+		@Test
+		void test_logLevels_null() throws Exception {
+			logTestStart();
+
+			handler.handleLogEvent(new TestLogEvent().setLevel(LogLevel.INFO));
+
+			assertThat(handler.getLogEvents((LogLevel[]) null)).hasSize(1);
+		}
+
+		/**
 		 * DOCME add JavaDoc for method test_level
 		 * 
 		 * @throws Exception
 		 * @since 0.1.0
 		 */
 		@Test
-		void test_level() throws Exception {
+		void test_logLevels_single() throws Exception {
 			logTestStart();
 
 			handler.handleLogEvent(new TestLogEvent().setLevel(LogLevel.INFO));
@@ -153,7 +168,7 @@ abstract class CachingLogEventHandlerTest {
 		 * @since 0.1.0
 		 */
 		@Test
-		void test_level_empty() throws Exception {
+		void test_logLevels_single_notMatching() throws Exception {
 			logTestStart();
 
 			handler.handleLogEvent(new TestLogEvent().setLevel(LogLevel.INFO));
