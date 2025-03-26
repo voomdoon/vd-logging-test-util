@@ -6,16 +6,16 @@
 	<parent>
 		<groupId>de.voomdoon</groupId>
 		<artifactId>vd-parent</artifactId>
-		<version>0.1.0-SNAPSHOT</version>
+		<version>0.2.0-SNAPSHOT</version>
 		<relativePath />
 	</parent>
 
 	<groupId>de.voomdoon.testing</groupId>
 	<artifactId>vd-logging-test-util</artifactId>
-	<version>0.1.0-SNAPSHOT</version>
+	<version>0.2.0-SNAPSHOT</version>
 
 	<properties>
-		<vd-test-util_version>0.1.0-SNAPSHOT</vd-test-util_version>
+		<vd-test-util_version>0.2.0-SNAPSHOT</vd-test-util_version>
 	</properties>
 
 	<dependencies>
@@ -34,7 +34,7 @@
 		<dependency>
 			<groupId>de.voomdoon.logging</groupId>
 			<artifactId>vd-logging</artifactId>
-			<version>0.1.0-SNAPSHOT</version>
+			<version>0.2.0-SNAPSHOT</version>
 			<classifier>tests</classifier>
 			<scope>test</scope>
 		</dependency>
