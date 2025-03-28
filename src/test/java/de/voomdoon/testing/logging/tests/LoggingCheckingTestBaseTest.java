@@ -1,11 +1,16 @@
 package de.voomdoon.testing.logging.tests;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import java.util.List;
 
+import org.assertj.core.api.AbstractThrowableAssert;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 
 import de.voomdoon.logging.LogEvent;
 import de.voomdoon.logging.LogLevel;
@@ -16,7 +21,7 @@ import de.voomdoon.testing.tests.TestBase;
 //TODO test logTestEnd
 
 /**
- * DOCME add JavaDoc for
+ * Test class for {@link LoggingCheckingTestBase}.
  *
  * @author André Schulz
  *
@@ -55,7 +60,75 @@ class LoggingCheckingTestBaseTest extends TestBase {
 	}
 
 	/**
-	 * DOCME add JavaDoc for LoggingCheckingTestBaseTest
+	 * Test class for {@link LoggingCheckingTestBase#afterEach_verifyNoSevereLogs()}.
+	 *
+	 * @author André Schulz
+	 *
+	 * @since 0.1.0
+	 */
+	@Nested
+	class AfterEach_verifyNoSevereLogs_Test extends TestBase {
+
+		/**
+		 * @since 0.1.0
+		 */
+		@ParameterizedTest
+		@EnumSource(value = LogLevel.class, names = { "WARN", "ERROR", "FATAL" })
+		void test_AssertionError(LogLevel logLevel) throws Exception {
+			logTestStart();
+
+			LoggingCheckingTestBaseImplementation test = new LoggingCheckingTestBaseImplementation(logLevel);
+
+			test.log();
+
+			Throwable actual = assertThatThrownBy(() -> test.afterEach_verifyNoSevereLogs())
+					.isInstanceOf(AssertionError.class).hasMessageContaining(logLevel.toString()).actual();
+			logger.debug("actual: " + actual.getMessage(), actual);
+		}
+
+		/**
+		 * @since 0.1.0
+		 */
+		@Test
+		void test_AssertionError_messageContainsHIghestLevel() throws Exception {
+			logTestStart();
+
+			LoggingCheckingTestBaseImplementation test = new LoggingCheckingTestBaseImplementation(LogLevel.DEBUG) {
+
+				@Override
+				void log() {
+					logger.error("test-error");
+					logger.warn("test-warn");
+				}
+			};
+
+			test.log();
+
+			AbstractThrowableAssert<?, ?> assert1 = assertThatThrownBy(() -> test.afterEach_verifyNoSevereLogs())
+					.isInstanceOf(AssertionError.class).hasMessageContaining("ERROR");
+			assert1.message().doesNotContain("WARN");
+
+			Throwable actual = assert1.actual();
+			logger.debug("actual: " + actual.getMessage(), actual);
+		}
+
+		/**
+		 * @since 0.1.0
+		 */
+		@Test
+		void test_passes_INFO() throws Exception {
+			logTestStart();
+
+			LoggingCheckingTestBaseImplementation test = new LoggingCheckingTestBaseImplementation(LogLevel.INFO);
+
+			test.log();
+
+			assertDoesNotThrow(() -> test.afterEach_verifyNoSevereLogs());
+		}
+	}
+
+	/**
+	 * Test class for {@link LoggingCheckingTestBase#logTestStart()}.
 	 *
 	 * @author André Schulz
 	 *
@@ -65,8 +138,6 @@ class LoggingCheckingTestBaseTest extends TestBase {
 	class LogTestStartTest extends TestBase {
 
 		/**
-		 * DOCME add JavaDoc for LoggingCheckingTestBaseTest.LogTestStart
-		 *
 		 * @author André Schulz
 		 *
 		 * @since 0.1.0
@@ -136,8 +207,6 @@ class LoggingCheckingTestBaseTest extends TestBase {
 		}
 
 		/**
-		 * DOCME add JavaDoc for method log
-		 * 
 		 * @since 0.1.0
 		 */
 		void log() {

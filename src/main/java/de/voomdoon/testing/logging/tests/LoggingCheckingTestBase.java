@@ -1,5 +1,13 @@
 package de.voomdoon.testing.logging.tests;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.List;
+
+import org.junit.jupiter.api.AfterEach;
+
+import de.voomdoon.logging.LogEvent;
+import de.voomdoon.logging.LogLevel;
 import de.voomdoon.logging.LogManager;
 import de.voomdoon.testing.logging.CachingLogEventHandler;
 import de.voomdoon.testing.tests.TestBase;
@@ -37,6 +45,22 @@ public abstract class LoggingCheckingTestBase extends TestBase {
 	 */
 	public CachingLogEventHandler getLogCache() {
 		return logCache;
+	}
+
+	/**
+	 * Asserts whether there was no {@link LogLevel#WARN} or worse.
+	 * 
+	 * @since 0.1.0
+	 */
+	@AfterEach
+	protected void afterEach_verifyNoSevereLogs() {
+		for (LogLevel logLevel : new LogLevel[] { LogLevel.FATAL, LogLevel.ERROR, LogLevel.WARN }) {
+			List<LogEvent> events = getLogCache().getLogEvents(logLevel);
+			assertThat(events)
+					.withFailMessage(
+							() -> "Expecting no logging of level " + logLevel + ", but foudn " + events.size() + "!")
+					.isEmpty();
+		}
 	}
 
 	/**
