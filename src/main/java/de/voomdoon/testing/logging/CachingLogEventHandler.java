@@ -3,7 +3,9 @@ package de.voomdoon.testing.logging;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import de.voomdoon.logging.LogEvent;
 import de.voomdoon.logging.LogEventHandler;
@@ -63,5 +65,24 @@ public class CachingLogEventHandler implements LogEventHandler {
 	public void handleLogEvent(LogEvent logEvent) {
 		// TODO implement handleLogEvent
 		events.add(logEvent);
+	}
+
+	/**
+	 * DOCME add JavaDoc for method removeEvents
+	 * 
+	 * @param level
+	 * @param messagePattern
+	 * @since 0.2.0
+	 */
+	public void removeEvents(LogLevel level, Pattern messagePattern) {
+		Iterator<LogEvent> iterator = events.iterator();
+
+		while (iterator.hasNext()) {
+			LogEvent event = iterator.next();
+
+			if (event.getLevel() == level && messagePattern.matcher(event.getMessage().toString()).matches()) {
+				iterator.remove();
+			}
+		}
 	}
 }

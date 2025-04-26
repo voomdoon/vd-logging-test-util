@@ -3,6 +3,8 @@ package de.voomdoon.testing.logging;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import java.util.regex.Pattern;
+
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -172,6 +174,64 @@ class CachingLogEventHandlerTest {
 			logTestStart();
 
 			handler.handleLogEvent(new TestLogEvent().setLevel(LogLevel.INFO));
+
+			assertThat(handler.getLogEvents(LogLevel.WARN)).isEmpty();
+		}
+	}
+
+	/**
+	 * Tests for {@link CachingLogEventHandler#removeEvents(LogLevel, String)}.
+	 *
+	 * @author André Schulz
+	 *
+	 * @since 0.2.0
+	 */
+	@Nested
+	class RemoveEvents_LogLevel_Pattern_Test extends TestBase {
+
+		/**
+		 * @since 0.1.0
+		 */
+		private CachingLogEventHandler handler = new CachingLogEventHandler();
+
+		/**
+		 * @since 0.2.0
+		 */
+		@Test
+		void test_notRemovesNotMatchingByLevel() throws Exception {
+			logTestStart();
+
+			handler.handleLogEvent(new TestLogEvent().setLevel(LogLevel.INFO).setMessage("a"));
+
+			handler.removeEvents(LogLevel.WARN, Pattern.compile("a"));
+
+			assertThat(handler.getLogEvents(LogLevel.INFO)).hasSize(1);
+		}
+
+		/**
+		 * @since 0.2.0
+		 */
+		@Test
+		void test_notRemovesNotMatchingByPattern() throws Exception {
+			logTestStart();
+
+			handler.handleLogEvent(new TestLogEvent().setLevel(LogLevel.WARN).setMessage("b"));
+
+			handler.removeEvents(LogLevel.WARN, Pattern.compile("a"));
+
+			assertThat(handler.getLogEvents(LogLevel.WARN)).hasSize(1);
+		}
+
+		/**
+		 * @since 0.2.0
+		 */
+		@Test
+		void test_removesMatching() throws Exception {
+			logTestStart();
+
+			handler.handleLogEvent(new TestLogEvent().setLevel(LogLevel.WARN).setMessage("a"));
+
+			handler.removeEvents(LogLevel.WARN, Pattern.compile("a"));
 
 			assertThat(handler.getLogEvents(LogLevel.WARN)).isEmpty();
 		}
