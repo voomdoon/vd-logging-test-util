@@ -58,7 +58,7 @@ public abstract class LoggingCheckingTestBase extends TestBase {
 			List<LogEvent> events = getLogCache().getLogEvents(logLevel);
 			assertThat(events)
 					.withFailMessage(
-							() -> "Expecting no logging of level " + logLevel + ", but foudn " + events.size() + "!")
+							() -> "Expecting no logging of level " + logLevel + ", but found " + events.size() + "!")
 					.isEmpty();
 		}
 	}
