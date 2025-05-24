@@ -90,7 +90,7 @@ class LoggingCheckingTestBaseTest extends TestBase {
 		 * @since 0.1.0
 		 */
 		@Test
-		void test_AssertionError_messageContainsHIghestLevel() throws Exception {
+		void test_AssertionError_messageContainsHighestLevel() throws Exception {
 			logTestStart();
 
 			LoggingCheckingTestBaseImplementation test = new LoggingCheckingTestBaseImplementation(LogLevel.DEBUG) {
@@ -108,8 +108,31 @@ class LoggingCheckingTestBaseTest extends TestBase {
 					.isInstanceOf(AssertionError.class).hasMessageContaining("ERROR");
 			assert1.message().doesNotContain("WARN");
 
-			Throwable actual = assert1.actual();
-			logger.debug("actual: " + actual.getMessage(), actual);
+			logger.debug("actual: " + assert1.actual().getMessage());
+		}
+
+		/**
+		 * @since 0.2.0
+		 */
+		@Test
+		void test_AssertionError_messageContainsMessages() throws Exception {
+			logTestStart();
+
+			LoggingCheckingTestBaseImplementation test = new LoggingCheckingTestBaseImplementation(LogLevel.DEBUG) {
+
+				@Override
+				void log() {
+					logger.error("test-error");
+				}
+			};
+
+			test.log();
+
+			AbstractThrowableAssert<?, ?> assert1 = assertThatThrownBy(() -> test.afterEach_verifyNoSevereLogs())
+					.isInstanceOf(AssertionError.class).hasMessageContaining("ERROR");
+			assert1.message().contains("test-error");
+
+			logger.debug("actual: " + assert1.actual().getMessage());
 		}
 
 		/**

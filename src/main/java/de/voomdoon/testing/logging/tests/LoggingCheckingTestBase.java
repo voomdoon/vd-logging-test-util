@@ -3,6 +3,7 @@ package de.voomdoon.testing.logging.tests;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.AfterEach;
 
@@ -57,8 +58,9 @@ public abstract class LoggingCheckingTestBase extends TestBase {
 		for (LogLevel logLevel : new LogLevel[] { LogLevel.FATAL, LogLevel.ERROR, LogLevel.WARN }) {
 			List<LogEvent> events = getLogCache().getLogEvents(logLevel);
 			assertThat(events)
-					.withFailMessage(
-							() -> "Expecting no logging of level " + logLevel + ", but found " + events.size() + "!")
+					.withFailMessage(() -> "Expecting no logging of level " + logLevel + ", but found " + events.size()
+							+ "!\n"
+							+ events.stream().map(event -> "• " + event.getMessage()).collect(Collectors.joining("\n")))
 					.isEmpty();
 		}
 	}
