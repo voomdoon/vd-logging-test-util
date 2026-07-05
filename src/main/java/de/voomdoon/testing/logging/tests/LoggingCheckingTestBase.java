@@ -41,7 +41,7 @@ public abstract class LoggingCheckingTestBase extends TestBase {
 	/**
 	 * DOCME add JavaDoc for method getLogCache
 	 * 
-	 * @return
+	 * @return cached log event handler
 	 * @since 0.1.0
 	 */
 	public CachingLogEventHandler getLogCache() {

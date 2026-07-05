@@ -49,6 +49,7 @@ public class CachingLogEventHandler implements LogEventHandler {
 	 * DOCME add JavaDoc for method getLogEvents
 	 * 
 	 * @param logLevels
+	 *            levels to include, or none to include all levels
 	 * @return {@link List} of {@link LogEvent}
 	 * @since 0.1.0
 	 */
@@ -71,7 +72,9 @@ public class CachingLogEventHandler implements LogEventHandler {
 	 * DOCME add JavaDoc for method removeEvents
 	 * 
 	 * @param level
+	 *            level of events to remove
 	 * @param messagePattern
+	 *            pattern that event messages must match
 	 * @since 0.2.0
 	 */
 	public void removeEvents(LogLevel level, Pattern messagePattern) {
