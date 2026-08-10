@@ -16,7 +16,7 @@
 
 	<properties>
 		<vd-test-util_version>0.2.0-SNAPSHOT</vd-test-util_version>
-		<junit-jupiter.version>6.1.2</junit-jupiter.version>
+		<junit-jupiter.version>6.1.3</junit-jupiter.version>
 	</properties>
 
 	<dependencies>
